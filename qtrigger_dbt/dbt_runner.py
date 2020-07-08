@@ -35,17 +35,11 @@ class DBTRunner():
         final_args.extend(args)
         final_args.extend(['--profiles-dir', "../."])
 
-        log_lines = []
         with Popen(final_args, stdout=PIPE) as proc:
             for line in proc.stdout:
                 line = line.decode('utf-8').replace('\n', '').strip()
-                line = self.ansi_escape.sub('', line)
-                log_lines.append(line)
+                line = self.ansi_escape.sub('', line)        
                 self.logger.info(line)
-
-        if proc.returncode != 0:
-            line_for_err = '\n'.join(log_lines)
-            raise RuntimeError(line_for_err)
-
+                
     def is_valid(self, text):
         return text is not None and len(text) > 0
