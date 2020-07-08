@@ -1,0 +1,25 @@
+
+# This configuration file specifies information about connections to
+# your data warehouse(s). The file contains a series of "profiles."
+# Profiles specify database credentials and connection information
+#
+# By default, dbt looks for this file in ~/.dbt/profiles.yml. That option
+# can be configured when dbt is invoked with the --profiles-dir option:
+#
+#  $ dbt run --profiles-dir /opt/dbt/
+#
+
+jaffle:
+    outputs:
+        dev:                
+            # specify the snowflake connection
+            type: snowflake
+            threads: 1            
+            account:  "{{ env_var('DBT_ACCOUNT') }}" 
+            user:  "{{ env_var('DBT_USER') }}"
+            password: "{{ env_var('DBT_PASSWORD') }}" 
+            role:  "{{ env_var('DBT_ROLE') }}"
+            database:  "{{ env_var('DBT_DB') }}"
+            warehouse:  "{{ env_var('DBT_WAREHOUSE') }}" 
+            schema:  "{{ env_var('DBT_SCHEMA') }}"
+    target: dev

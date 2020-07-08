@@ -1,0 +1,16 @@
+requests==2.22.0
+google-api-core==1.16.0
+googleapis-common-protos==1.6.0
+azure-functions
+azure-storage-blob==1.5.0
+azure-storage-common==1.4.2
+azure-storage-file==1.4.0
+azure-storage-queue==1.4.0
+dbt==0.16.1
+dbt-core==0.16.1
+dbt-snowflake==0.16.1
+opencensus>=0.7.6
+opencensus-context>=0.1.1
+opencensus-ext-azure>=1.0.1
+pytest>=5.3.5
+schema>=0.7.1
