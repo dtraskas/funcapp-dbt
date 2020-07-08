@@ -1,0 +1,43 @@
+# Python Build, Test and Publish Pipeline
+# 
+# 
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# Pipeline-level variables
+variables:
+  workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+trigger:
+- master
+
+jobs:
+
+  - job: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+  
+    steps:
+    - task: UsePythonVersion@0
+      displayName: "Use Python version 3.7"
+      inputs:
+          versionSpec: '3.7'
+          architecture: 'x64'
+    
+    - checkout: self  # self represents the repo where the initial Azure Pipelines YAML file was found
+      displayName: 'Checkout'
+      submodules: true
+    
+    - bash: pip install -r $(workingDirectory)/requirements.txt
+      displayName: 'Install Requirements'
+      workingDirectory: $(workingDirectory)     
+
+    - task: Docker@2
+      displayName: Build and push the new image
+      inputs:
+        command: buildAndPush
+        repository: 'funcapp-dbt-trigger'
+        dockerfile: 'Dockerfile'
+        containerRegistry: 'svc-demo-docker-reg'
+        tags: |
+          $(Build.BuildId)
